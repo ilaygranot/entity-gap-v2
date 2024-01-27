@@ -8,6 +8,7 @@ class EntityAnalyzer:
         entities = []
         for url in urls:
             try:
+                print(f"Processing URL with TextRazor: {url}")
                 client = textrazor.TextRazor(extractors=["entities"])
                 response = client.analyze_url(url)
                 for entity in response.entities():
@@ -20,6 +21,7 @@ class EntityAnalyzer:
                         "Matched_Text": entity.matched_text,
                         "Wikipedia_Link": entity.wikipedia_link
                     })
+                print(f"Extraction successful for URL: {url}")
             except Exception as e:
-                print(f"Error processing URL {url}: {e}")
+                print(f"Failed to extract entities for URL {url}: {e}")
         return entities
