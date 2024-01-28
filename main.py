@@ -24,14 +24,19 @@ class WebEntityAnalyzerApp:
     def run(self):
         st.title('Entity Gap Analysis 🕸️🔍')
         st.write("This tool helps you analyze entities found in web content...")
-
-        # Removed sidebar inputs for API keys
+    
         target_url = st.sidebar.text_input("Enter target URL")
         query = st.sidebar.text_input("Enter search keywords")
         no_of_results = st.sidebar.slider("Number of results", 1, 100, 10)
-        domain_selection = st.sidebar.selectbox('Select Domain', self.domains['domain'])
-        country_selection = st.sidebar.selectbox('Select Country', self.countries['countryName'])
-        language_selection = st.sidebar.selectbox('Select Language', self.languages['langName'])
+    
+        # Attempt to find the default index for each selection. If not found, default to 0 (first item in the list)
+        default_domain_idx = next((i for i, x in enumerate(self.domains['domain']) if x == 'google.com'), 0)
+        default_country_idx = next((i for i, x in enumerate(self.countries['countryName']) if x == 'United States'), 0)
+        default_language_idx = next((i for i, x in enumerate(self.languages['langName']) if x == 'English'), 0)
+    
+        domain_selection = st.sidebar.selectbox('Select Domain', self.domains['domain'], index=default_domain_idx)
+        country_selection = st.sidebar.selectbox('Select Country', self.countries['countryName'], index=default_country_idx)
+        language_selection = st.sidebar.selectbox('Select Language', self.languages['langName'], index=default_language_idx)
 
         if query and st.button('Start Process 🚀'):
             self.entity_analyzer = EntityAnalyzer(self.textrazor_api_key)
