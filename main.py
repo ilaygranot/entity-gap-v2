@@ -29,16 +29,13 @@ class WebEntityAnalyzerApp:
         target_url = st.sidebar.text_input("Enter target URL")
         query = st.sidebar.text_input("Enter search keywords")
         no_of_results = st.sidebar.slider("Number of results", 1, 100, 10)
-    
-        # Set default values for domain, country, and language
-        default_domain_idx = self.domains[self.domains['domain'] == 'google.com'].index[0]
-        default_country_idx = self.countries[self.countries['countryName'] == 'United States'].index[0]
-        default_language_idx = self.languages[self.languages['langName'] == 'English'].index[0]
-    
-        domain_selection = st.sidebar.selectbox('Select Domain', self.domains['domain'], index=default_domain_idx)
-        country_selection = st.sidebar.selectbox('Select Country', self.countries['countryName'], index=default_country_idx)
-        language_selection = st.sidebar.selectbox('Select Language', self.languages['langName'], index=default_language_idx)
+        domain_selection = st.sidebar.selectbox('Select Domain', self.domains['domain'])
+        country_selection = st.sidebar.selectbox('Select Country', self.countries['countryName'])
+        language_selection = st.sidebar.selectbox('Select Language', self.languages['langName'])
 
+        if query and st.button('Start Process 🚀'):
+            self.entity_analyzer = EntityAnalyzer(self.textrazor_api_key)
+            self.start_analysis(self.api_key, query, domain_selection, country_selection, language_selection, no_of_results, target_url)
         if query and st.button('Start Process 🚀'):
             self.entity_analyzer = EntityAnalyzer(self.textrazor_api_key)
             self.start_analysis(self.api_key, query, domain_selection, country_selection, language_selection, no_of_results, target_url)
