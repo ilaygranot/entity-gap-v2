@@ -25,7 +25,7 @@ class WebEntityAnalyzerApp:
         st.title('Entity Gap Analysis 🕸️🔍')
         st.write("This tool helps you analyze entities found in web content...")
 
-        # Set up sidebar inputs for target URL, search query, number of results, and default selections for domain (google.com), country (United States), and language (English)
+        # Sidebar Inputs
         target_url = st.sidebar.text_input("Enter target URL")
         query = st.sidebar.text_input("Enter search keywords")
         no_of_results = st.sidebar.slider("Number of results", 1, 100, 10)
@@ -33,9 +33,6 @@ class WebEntityAnalyzerApp:
         country_selection = st.sidebar.selectbox('Select Country', self.countries['countryName'])
         language_selection = st.sidebar.selectbox('Select Language', self.languages['langName'])
 
-        if query and st.button('Start Process 🚀'):
-            self.entity_analyzer = EntityAnalyzer(self.textrazor_api_key)
-            self.start_analysis(self.api_key, query, domain_selection, country_selection, language_selection, no_of_results, target_url)
         if query and st.button('Start Process 🚀'):
             self.entity_analyzer = EntityAnalyzer(self.textrazor_api_key)
             self.start_analysis(self.api_key, query, domain_selection, country_selection, language_selection, no_of_results, target_url)
