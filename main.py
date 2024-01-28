@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import textrazor
 # from concurrent.futures import ThreadPoolExecutor
 from serp_api_handler import SerpApiHandler
 from config_loader import ConfigLoader
