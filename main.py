@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import textrazor
-# from concurrent.futures import ThreadPoolExecutor
 from serp_api_handler import SerpApiHandler
 from config_loader import ConfigLoader
 from entity_analyzer import EntityAnalyzer
@@ -18,12 +17,15 @@ class WebEntityAnalyzerApp:
         self.entity_analyzer = None
         print("Configuration loaded.")
 
+        # Fetch API keys from Streamlit secrets
+        self.textrazor_api_key = st.secrets["TEXTRAZOR_API_KEY"]
+        self.api_key = st.secrets["SERP_API_KEY"]
+
     def run(self):
         st.title('Entity Gap Analysis 🕸️🔍')
         st.write("This tool helps you analyze entities found in web content...")
 
-        textrazor_api_key = st.sidebar.text_input("Enter your TextRazor API key")
-        api_key = st.sidebar.text_input("Enter your SERP API key")
+        # Removed sidebar inputs for API keys
         target_url = st.sidebar.text_input("Enter target URL")
         query = st.sidebar.text_input("Enter search keywords")
         no_of_results = st.sidebar.slider("Number of results", 1, 100, 10)
@@ -31,9 +33,9 @@ class WebEntityAnalyzerApp:
         country_selection = st.sidebar.selectbox('Select Country', self.countries['countryName'])
         language_selection = st.sidebar.selectbox('Select Language', self.languages['langName'])
 
-        if textrazor_api_key and api_key and query and st.button('Start Process 🚀'):
-            self.entity_analyzer = EntityAnalyzer(textrazor_api_key)
-            self.start_analysis(api_key, query, domain_selection, country_selection, language_selection, no_of_results, target_url)
+        if query and st.button('Start Process 🚀'):
+            self.entity_analyzer = EntityAnalyzer(self.textrazor_api_key)
+            self.start_analysis(self.api_key, query, domain_selection, country_selection, language_selection, no_of_results, target_url)
 
     def extract_urls_from_serp(self, serp_json):
         print("Extracting URLs from SERP results...")
