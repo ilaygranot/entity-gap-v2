@@ -25,7 +25,7 @@ class WebEntityAnalyzerApp:
         st.title('Entity Gap Analysis 🕸️🔍')
         st.write("This tool helps you analyze entities found in web content...")
 
-        # Sidebar Inputs
+        # Removed sidebar inputs for API keys
         target_url = st.sidebar.text_input("Enter target URL")
         query = st.sidebar.text_input("Enter search keywords")
         no_of_results = st.sidebar.slider("Number of results", 1, 100, 10)
